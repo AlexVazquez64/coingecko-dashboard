@@ -8,12 +8,19 @@ const HeaderContainer = styled.header`
   padding: 20px;
   color: white;
   text-align: center;
-  font-size: 1.5em;
+  width: 100%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+`;
+
+const Title = styled.h1`
+  margin: 0;
+  font-size: 2em;
+  font-weight: bold;
 `;
 
 const Header: React.FC = () => (
   <HeaderContainer>
-    CoinGecko Dashboard
+    <Title>CoinGecko Dashboard</Title>
   </HeaderContainer>
 );
 

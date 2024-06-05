@@ -4,14 +4,16 @@ import React, { useState, useEffect } from 'react';
 import { getCoinData } from './services/api';
 import Chart from './components/Chart';
 import Filters from './components/Filters';
+import Header from './components/Header';
 import styled, { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
   body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    background-color: #f4f4f4;
   }
 `;
 
@@ -20,11 +22,9 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 20px;
+  max-width: 1200px;
+  margin: auto;
 `;
-
-interface CoinData {
-  prices: [number, number][];
-}
 
 const App: React.FC = () => {
   const [coin, setCoin] = useState<string>('bitcoin');
@@ -33,8 +33,8 @@ const App: React.FC = () => {
 
   useEffect(() => {
     getCoinData(coin, days).then((response) => {
-      const prices: CoinData = response.data;
-      const formattedData = prices.prices.map((price) => ({
+      const prices = response.data.prices;
+      const formattedData = prices.map((price: [number, number]) => ({
         date: new Date(price[0]).toLocaleDateString(),
         price: price[1],
       }));
@@ -45,7 +45,7 @@ const App: React.FC = () => {
   return (
     <Container>
       <GlobalStyle />
-      <h1>CoinGecko Dashboard</h1>
+      <Header />
       <Filters onCoinChange={setCoin} onDaysChange={setDays} />
       <Chart data={data} />
     </Container>
