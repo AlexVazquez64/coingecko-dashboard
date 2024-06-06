@@ -17,6 +17,8 @@ Este proyecto es un dashboard interactivo que visualiza datos de criptomonedas u
 
 ## Estructura del Proyecto
 
+```bash
+
 /src
 |-- /components
 |   |-- Chart.tsx
@@ -29,9 +31,15 @@ Este proyecto es un dashboard interactivo que visualiza datos de criptomonedas u
 |-- App.tsx
 |-- index.tsx
 
+```
+
 ## Despliegue en Vivo
 
-   Enlace a la demostración en vivo
+   [Enlace a la demostración en vivo](https://alexvazquez64.github.io/coingecko-dashboard/)
+
+## Capturas de pantalla
+
+![Vista inicial](./public/dashboard.png "Dashboard")
 
 ## Funcionalidades
 
