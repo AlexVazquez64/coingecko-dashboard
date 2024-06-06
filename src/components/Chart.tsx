@@ -1,40 +1,84 @@
 // src/components/Chart.tsx
 
-import React from 'react';
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
-import styled from 'styled-components';
+import React from "react";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+} from "recharts";
+import styled from "styled-components";
 
-const ChartContainer = styled.div`
+const ChartsContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
   width: 100%;
-  max-width: 1000px;
-  margin: 20px 0;
+`;
+
+const ChartWrapper = styled.div`
+  flex: 1 1 calc(50% - 20px);
+  max-width: calc(50% - 20px);
+`;
+
+const Card = styled.div`
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+  color: #fff;
 `;
 
 interface ChartProps {
   data: { date: string; price: number }[];
+  pieData: { name: string; value: number }[];
 }
 
+const formatNumber = (number: number) => {
+  return "$" + number.toLocaleString("en-US", { maximumFractionDigits: 2 });
+};
+
 const Chart: React.FC<ChartProps> = ({ data }) => (
-  <ChartContainer>
-    <h2>Price Over Time</h2>
-    <ResponsiveContainer width="100%" height={400}>
-      <LineChart data={data}>
-        <XAxis dataKey="date" />
-        <YAxis />
-        <Tooltip />
-        <Line type="monotone" dataKey="price" stroke="#8884d8" />
-      </LineChart>
-    </ResponsiveContainer>
-    <h2>Bar Chart</h2>
-    <ResponsiveContainer width="100%" height={400}>
-      <BarChart data={data}>
-        <XAxis dataKey="date" />
-        <YAxis />
-        <Tooltip />
-        <Bar dataKey="price" fill="#82ca9d" />
-      </BarChart>
-    </ResponsiveContainer>
-  </ChartContainer>
+  <ChartsContainer>
+    <ChartWrapper>
+      <Card>
+        <h2 style={{ textAlign: "center" }}>Price Over Time</h2>
+        <ResponsiveContainer width="100%" height={400}>
+          <LineChart data={data}>
+            <XAxis dataKey="date" tick={{ fill: "#fff" }} />
+            <YAxis tick={{ fill: "#fff" }} />
+            <Tooltip
+              contentStyle={{ color: "#642F6C", backgroundColor: "#ffffff" }}
+              formatter={(value: number) => formatNumber(value)}
+            />
+            <Line type="monotone" dataKey="price" stroke="#642F6C" />
+          </LineChart>
+        </ResponsiveContainer>
+      </Card>
+    </ChartWrapper>
+
+    <ChartWrapper>
+      <Card>
+        <h2 style={{ textAlign: "center" }}>Bar Chart</h2>
+        <ResponsiveContainer width="100%" height={400}>
+          <BarChart data={data}>
+            <XAxis dataKey="date" tick={{ fill: "#fff" }} />
+            <YAxis tick={{ fill: "#fff" }} />
+            <Tooltip
+              contentStyle={{ color: "#642F6C", backgroundColor: "#ffffff" }}
+              formatter={(value: number) => formatNumber(value)}
+            />
+            <Bar dataKey="price" fill="#642F6C" />
+          </BarChart>
+        </ResponsiveContainer>
+      </Card>
+    </ChartWrapper>
+  </ChartsContainer>
 );
 
 export default Chart;

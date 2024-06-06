@@ -1,11 +1,11 @@
 // src/App.tsx
 
-import React, { useState, useEffect } from 'react';
-import { getCoinData } from './services/api';
-import Chart from './components/Chart';
-import Filters from './components/Filters';
-import Header from './components/Header';
-import styled, { createGlobalStyle } from 'styled-components';
+import React, { useState, useEffect } from "react";
+import { getCoinData, getCoinDetails } from "./services/api";
+import Chart from "./components/Chart";
+import Filters from "./components/Filters";
+import Header from "./components/Header";
+import styled, { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -13,7 +13,8 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: #f4f4f4;
+    background-color: #1a1a2e;
+    color: #fff;
   }
 `;
 
@@ -27,9 +28,10 @@ const Container = styled.div`
 `;
 
 const App: React.FC = () => {
-  const [coin, setCoin] = useState<string>('bitcoin');
+  const [coin, setCoin] = useState<string>("bitcoin");
   const [days, setDays] = useState<number>(7);
   const [data, setData] = useState<{ date: string; price: number }[]>([]);
+  const [pieData, setPieData] = useState<{ name: string; value: number }[]>([]);
 
   useEffect(() => {
     getCoinData(coin, days).then((response) => {
@@ -40,6 +42,19 @@ const App: React.FC = () => {
       }));
       setData(formattedData);
     });
+
+    getCoinDetails(coin).then((response) => {
+      const { market_data } = response.data;
+      const supplyData = [
+        { name: "Circulating Supply", value: market_data.circulating_supply },
+        { name: "Total Supply", value: market_data.total_supply },
+        {
+          name: "Max Supply",
+          value: market_data.max_supply || market_data.total_supply,
+        },
+      ];
+      setPieData(supplyData);
+    });
   }, [coin, days]);
 
   return (
@@ -47,7 +62,7 @@ const App: React.FC = () => {
       <GlobalStyle />
       <Header />
       <Filters onCoinChange={setCoin} onDaysChange={setDays} />
-      <Chart data={data} />
+      <Chart data={data} pieData={[]} />
     </Container>
   );
 };

@@ -1,26 +1,25 @@
 // src/components/Header.tsx
 
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 const HeaderContainer = styled.header`
-  background-color: #282c34;
+  background: rgba(0, 0, 0, 0.8);
   padding: 20px;
-  color: white;
-  text-align: center;
   width: 100%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
 `;
 
 const Title = styled.h1`
+  color: #00ffff;
+  font-size: 2rem;
   margin: 0;
-  font-size: 2em;
-  font-weight: bold;
 `;
 
 const Header: React.FC = () => (
   <HeaderContainer>
-    <Title>CoinGecko Dashboard</Title>
+    <Title>Virtual Coin Dashboard</Title>
   </HeaderContainer>
 );
 

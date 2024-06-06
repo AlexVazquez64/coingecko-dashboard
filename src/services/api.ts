@@ -16,4 +16,6 @@ export const getCoinData = (coinId: string, days: number) =>
 
 export const getCoinsList = () => api.get("/coins/list");
 
+export const getCoinDetails = (coinId: string) => api.get(`/coins/${coinId}`);
+
 export default api;
